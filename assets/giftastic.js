@@ -3,7 +3,7 @@
 //Note about my click events -- I don't know if this is the best way to deal with
 //elements that have been added to the page, but it's the way that works for me now.
 
-
+var topics = [];
 var responseObjs = [];
 
 //---> responseObjs template <---
@@ -24,14 +24,16 @@ function getQuery(query, offset) {
   //search responseObjs for any with a query value matching query.
   //if it matches, save the index and
   var foundAt = 0;
+  var exists = false;
 
   for (var i = 0; i < responseObjs.length; i++) {
     if (responseObjs[i].query == query){
       foundAt = i;
+      exists = true;
     }
   }
 
-  if (foundAt) {
+  if (exists) {
     offset = responseObjs[foundAt].data.length;
   } else {
     offset = 0;
@@ -55,7 +57,7 @@ function getQuery(query, offset) {
     // save our respose in the correct place.
     var data = response.data;
     if (response.meta.status == 200) {
-      if (!foundAt) {
+      if (!exists) {
         responseObjs.push( {query, data} );
       } else {
         responseObjs[foundAt].data = responseObjs[foundAt].data.concat(data); //WORKING TODO
@@ -75,7 +77,10 @@ $("#add-gif").on("click", function(event) {
   var input = $("#search-input").val();
   if (input) {
     getQuery(input, 0);
-    addButton(input);
+    if (topics.indexOf(input) == -1) {
+      addButton(input); //TODO only if the button doesn't exist yet....
+      topics.push(input);
+    }
     $("#search-input").val('');
   }
 });
@@ -130,16 +135,32 @@ function togglePause(target) {
 function renderQuery() {
   var currentData = responseObjs[responseObjs.length-1].data;
 
-  currentData.forEach(function(element) {
-      var newimg = $("<img>")
-                   .attr("class","gif")
-                   .attr("src", element.images.downsized_still.url)
-                   .attr("data-still", element.images.downsized_still.url)
-                   .attr("data-animate", element.images.downsized.url)
-                   .attr("state","still")
-                   .attr("class", "gif");
-      // $("#topics-view").append($("<p>").text("hello world"));
+  //only print out the last 5 of our data...
+  for (var i = currentData.length - limit; i < currentData.length; i++) {
+    var newimg = $("<img>")
+                 .attr("class","gif")
+                 .attr("src", currentData[i].images.downsized_still.url)
+                 .attr("data-still", currentData[i].images.downsized_still.url)
+                 .attr("data-animate", currentData[i].images.downsized.url)
+                 .attr("state","still")
+                 .attr("class", "gif");
+    // $("#gifs-view").append($("<p>").css("color","white").text("hello world"));
 
-      $("#gifs-view").prepend(newimg);
-  });
+    $("#gifs-view").prepend(newimg);
+  }
+
+
+
+  // currentData.forEach(function(element) {
+  //     var newimg = $("<img>")
+  //                  .attr("class","gif")
+  //                  .attr("src", element.images.downsized_still.url)
+  //                  .attr("data-still", element.images.downsized_still.url)
+  //                  .attr("data-animate", element.images.downsized.url)
+  //                  .attr("state","still")
+  //                  .attr("class", "gif");
+  //     // $("#gifs-view").append($("<p>").css("color","white").text("hello world"));
+  //
+  //     $("#gifs-view").prepend(newimg);
+  // });
 }
