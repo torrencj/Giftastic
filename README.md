@@ -1,1 +1,2 @@
 # Giftastic
+.DS_Store

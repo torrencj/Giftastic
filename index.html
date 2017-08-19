@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Gifs</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Gif Search</h1>
+
+    <!-- gifs will get dumped here -->
+    <div id="gifs-view" topic-shown="none"></div>
+    <div id="topics-view"></div>
+
+    <form id="search-form">
+      <label for="search-input">Search:</label>
+      <input type="text" id="search-input" autofocus><br>
+
+      <!-- Button triggers new movie to be added -->
+      <!-- <input id="add-gif" type="submit" value="Add a gif"> -->
+      <!-- <button id="add-gif" value="Add a gif"> -->
+      <!-- <input id="add-gif" type="button" value="Add a gif"> -->
+        <button id="add-gif">Add a gif</button>
+    </form>
+
+    <div class="info-view">
+      <p class="Title: "></p>
+      <p class="Rating: "></p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/giftastic.js"></script>
+  </div>
+</body>
+
+</html>
