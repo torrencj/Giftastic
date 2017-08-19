@@ -138,7 +138,7 @@ function renderQuery() {
                    .attr("data-animate", element.images.downsized.url)
                    .attr("state","still")
                    .attr("class", "gif");
-      $("#topics-view").append($("<p>").text("hello world"));
+      // $("#topics-view").append($("<p>").text("hello world"));
 
       $("#gifs-view").prepend(newimg);
   });
